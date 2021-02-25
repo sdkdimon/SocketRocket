@@ -26,9 +26,9 @@ else
   popd
   
   popd
-
-  python $VIRTUALENV_PATH/virtualenv-$VIRTUALENV_VERSION/virtualenv.py $VIRTUALENV_PATH
-
+  python $VIRTUALENV_PATH/virtualenv-$VIRTUALENV_VERSION/virtualenv.py --no-setuptools $VIRTUALENV_PATH
+  $VIRTUALENV_PATH/bin/python -m pip install "setuptools<45"
+  
   source $VIRTUALENV_PATH/bin/activate
 	pip install autobahntestsuite
   

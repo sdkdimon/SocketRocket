@@ -471,7 +471,7 @@ NSString *const SRHTTPResponseErrorKey = @"HTTPResponseStatusCode";
         [_securityPolicy updateSecurityOptionsInStream:_outputStream];
     }
 
-    NSString *networkServiceType = SRStreamNetworkServiceTypeFromURLRequest(_urlRequest);
+    NSString *networkServiceType = SRStreamNetworkServiceTypeFromURLRequestNetworkService(_urlRequest.networkServiceType);
     if (networkServiceType != nil) {
         [_inputStream setProperty:networkServiceType forKey:NSStreamNetworkServiceType];
         [_outputStream setProperty:networkServiceType forKey:NSStreamNetworkServiceType];

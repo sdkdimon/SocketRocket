@@ -21,6 +21,6 @@ extern BOOL SRURLRequiresSSL(NSURL *url);
 extern NSString *_Nullable SRBasicAuthorizationHeaderFromURL(NSURL *url);
 
 // Returns a valid value for `NSStreamNetworkServiceType` or `nil`.
-extern NSString *_Nullable SRStreamNetworkServiceTypeFromURLRequest(NSURLRequest *request);
+extern NSString *_Nullable SRStreamNetworkServiceTypeFromURLRequestNetworkService(NSURLRequestNetworkServiceType networkServiceType);
 
 NS_ASSUME_NONNULL_END

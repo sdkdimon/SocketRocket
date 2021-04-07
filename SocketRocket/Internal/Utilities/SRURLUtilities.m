@@ -47,35 +47,26 @@ extern NSString *_Nullable SRBasicAuthorizationHeaderFromURL(NSURL *url)
     return [NSString stringWithFormat:@"Basic %@", SRBase64EncodedStringFromData(data)];
 }
 
-extern NSString *_Nullable SRStreamNetworkServiceTypeFromURLRequest(NSURLRequest *request)
+extern NSString *_Nullable SRStreamNetworkServiceTypeFromURLRequestNetworkService(NSURLRequestNetworkServiceType networkServiceType)
 {
-    NSString *networkServiceType = nil;
-    switch (request.networkServiceType) {
+    switch (networkServiceType) {
+        
+        case NSURLNetworkServiceTypeVoIP: return NSStreamNetworkServiceTypeVoIP;
+        case NSURLNetworkServiceTypeVideo: return NSStreamNetworkServiceTypeVideo;
+        case NSURLNetworkServiceTypeBackground: return NSStreamNetworkServiceTypeBackground;
+        case NSURLNetworkServiceTypeVoice: return NSStreamNetworkServiceTypeVoice;
         case NSURLNetworkServiceTypeDefault:
-            break;
-        case NSURLNetworkServiceTypeVoIP:
-            networkServiceType = NSStreamNetworkServiceTypeVoIP;
-            break;
-        case NSURLNetworkServiceTypeVideo:
-            networkServiceType = NSStreamNetworkServiceTypeVideo;
-            break;
-        case NSURLNetworkServiceTypeBackground:
-            networkServiceType = NSStreamNetworkServiceTypeBackground;
-            break;
-        case NSURLNetworkServiceTypeVoice:
-            networkServiceType = NSStreamNetworkServiceTypeVoice;
-            break;
-#if (__MAC_OS_X_VERSION_MAX_ALLOWED >= 101200 || __IPHONE_OS_VERSION_MAX_ALLOWED >= 100000 || __TV_OS_VERSION_MAX_ALLOWED >= 100000 || __WATCH_OS_VERSION_MAX_ALLOWED >= 30000)
         case NSURLNetworkServiceTypeResponsiveData:
         case NSURLNetworkServiceTypeAVStreaming:
-        case NSURLNetworkServiceTypeResponsiveAV:
-            break;
-        case NSURLNetworkServiceTypeCallSignaling:
-            networkServiceType = NSStreamNetworkServiceTypeCallSignaling;
-            break;
-#endif
+        case NSURLNetworkServiceTypeResponsiveAV: return nil;
+        default:
+            if (@available(iOS 10, macOS 10.12, tvOS 10.0, watchOS 3.0, *)) {
+                if (networkServiceType == NSURLNetworkServiceTypeCallSignaling){
+                    return NSStreamNetworkServiceTypeCallSignaling;
+                }
+            }
+            return nil;
     }
-    return networkServiceType;
 }
 
 NS_ASSUME_NONNULL_END
